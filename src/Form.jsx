@@ -142,10 +142,10 @@ export function Form(){
           <div>
             <label htmlFor="select">Tipo do post</label>
           <select id="select" onChange={(event)=>{setSelect(event.target.value)}}>
-            <option value="artigo">Artigo</option>
-            <option value="noticia">Noticia</option>
-            <option value="tutorial">Tutorial</option>
-            <option value="entrevista">Etrevista</option>
+            <option value="ARTIGO">Artigo</option>
+            <option value="NOTICIA">Noticia</option>
+            <option value="TUTORIAL">Tutorial</option>
+            <option value="ENTREVISTA">Etrevista</option>
           </select>
           </div>
 
