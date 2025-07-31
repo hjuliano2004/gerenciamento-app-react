@@ -1,10 +1,13 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRef } from 'react';
 
+export function Form({registros,refresh}){
 
-let registros = JSON.parse(localStorage.getItem("registros"));
-
-export function Form(){
+  useEffect(()=>{
+    if(registros.length > 0){
+    setNumero(registros.length);
+  }
+  }, [registros])
 
     
   const [titulo, setTitulo] = useState("");
@@ -29,24 +32,33 @@ export function Form(){
 }
 
   function contagem(){
-    let array = JSON.parse(localStorage.getItem("registros"));
-    setNumero(array.length);
+    setNumero(registros.length);
   }
 
   function guardar(){
-    if(!registros){
-      registros = [];
+
+     let sequence = Number(localStorage.getItem("sequence"));
+    
+    if((isNaN(sequence))){
+      sequence = 0;
     }
+
+    sequence++;
+    localStorage.setItem("sequence", sequence);
 
     registros.push({
       titulo: titulo,
       descricao: descricao,
       img: img,
       data: data,
-      select: select
+      select: select,
+      id: sequence
     });
 
     localStorage.setItem("registros", JSON.stringify(registros));
+
+    refresh();
+    
   }  
 
   function validacao(){
@@ -101,6 +113,7 @@ export function Form(){
     setDescricao("");
     setTitulo("");
     setImg("");
+    
     }
   }
 

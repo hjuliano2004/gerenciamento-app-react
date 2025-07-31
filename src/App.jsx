@@ -1,23 +1,31 @@
-//import { useState } from 'react'
-//import { useRef } from 'react';
+import { useEffect, useState} from 'react';
 import './App.css';
 import { Form } from './Form';
 import { Post } from './Post';
 
-let registros = JSON.parse(localStorage.getItem("registros"));
-
-console.log(registros);
 function App() {
+
+
+   const [registros, setRegistros] = useState([]);
+  
+    useEffect(() => {
+
+      setRegistros(JSON.parse(localStorage.getItem("registros")));
+
+    },[]);
+
+    function atualizarLista(){
+      setRegistros(JSON.parse(localStorage.getItem("registros")));
+    }
 
     return (
         <div>
+          <Form registros={registros} refresh={atualizarLista} />
 
-          <Form />
+          {registros.map((registro)=>{
 
-          <section>
-            {Post(registros[0])}
-          </section>
-
+            return <Post registro={registro} key={registro.id} refresh={atualizarLista} />
+          })}
         </div>
     )
 }
