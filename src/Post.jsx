@@ -11,12 +11,11 @@ export function Post({registro, refresh}){
         for(let i=0;i<lista.length;i++){
             if(lista[i].id == id){
                 lista.splice(i, 1);
-
                 
             }
         }
 
-
+        localStorage.setItem("registros", JSON.stringify(lista));
         refresh();
     }
 
@@ -36,7 +35,7 @@ export function Post({registro, refresh}){
             </div>
 
             <div className="celula-Btn">
-                <button className="exclui" onClick={handDelete(registro.id)}>excluir</button>
+                <button className="exclui" onClick={()=> handDelete(registro.id)}>excluir</button>
             </div>
         </div>
 
