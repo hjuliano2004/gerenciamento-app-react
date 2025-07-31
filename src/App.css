@@ -92,3 +92,7 @@ p, span{
     color: #1010ff;
     font-size: 18px;
 }
+
+.contadores{
+    display: block;
+}

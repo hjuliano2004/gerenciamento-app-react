@@ -4,9 +4,9 @@ import { useRef } from 'react';
 export function Form({registros,refresh}){
 
   useEffect(()=>{
-    if(registros.length > 0){
     setNumero(registros.length);
-  }
+    contagem();
+  
   }, [registros])
 
     
@@ -15,9 +15,17 @@ export function Form({registros,refresh}){
   const [img, setImg] = useState("");
   const [data, setData] = useState(crono());
   const [numero, setNumero] = useState(registros.length);
-  const [select, setSelect] = useState("artigo");
+  const [select, setSelect] = useState("ARTIGO");
+  const [artigo, setArtigo] = useState(0);
+  const [noticia, setNoticia] = useState(0);
+  const [tutorial, setTutorial] = useState(0);
+  const [entrevista, setEntrevista] = useState(0);
+
+
   const imgRef = useRef(null);
   const dataRef = useRef(null);
+
+
   let url = imgRef.current;
 
   function crono(){
@@ -33,6 +41,37 @@ export function Form({registros,refresh}){
 
   function contagem(){
     setNumero(registros.length);
+
+
+    let entrevista = 0;
+    let noticia = 0;
+    let tutorial = 0;
+    let artigo = 0;
+
+    for(let i=0;i<registros.length;i++){
+      const valor = registros[i].select;
+
+      switch (valor) {
+        case "ARTIGO": 
+            artigo++;
+          break;
+        case "TUTORIAL":
+            tutorial++;
+          break;
+        case "NOTICIA":
+            noticia++;
+          break;
+        case "ENTREVISTA":
+          entrevista++;
+          break;
+      }
+    }
+
+    setArtigo(artigo);
+    setNoticia(noticia);
+    setTutorial(tutorial);
+    setEntrevista(entrevista);
+
   }
 
   function guardar(){
@@ -122,6 +161,11 @@ export function Form({registros,refresh}){
           <header>
             <h1>Painel de Gerenciamento</h1>
             <p>Atualmente você tem <strong >{numero}</strong> <strong>posts</strong> cadastrados</p>
+
+            <strong className="contadores">Artigo:&nbsp;&nbsp;&nbsp;{artigo}</strong>
+            <strong className="contadores">Noticia:&nbsp;&nbsp;&nbsp;{noticia}</strong>
+            <strong className="contadores">Tutorial:&nbsp;&nbsp;&nbsp;{tutorial}</strong>
+            <strong className="contadores">Entrevista:&nbsp;&nbsp;&nbsp;{entrevista}</strong>
           </header>
 
           <form onSubmit={save}>
